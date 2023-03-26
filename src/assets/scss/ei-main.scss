@@ -1,5 +1,36 @@
+@import "ei-typography.scss";
+@import "ei-icons.css";
+
+* {
+  box-sizing: border-box;
+}
+
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --brand-white: #ffffff;
+
+  --brand-primary: #3423A6;
+
+  --background-primary: #f0eefb;
+  --background-secondary: #f0eefb80;
+
+  --text-primary: #111111;
+  --text-secondary: #454545;
+  --text-tertiary: #7b7b7b;
+  --text-quartenary: #e0e0e0;
+
+  --notification: #c34444;
+  --online: #4dcd84;
+
+  --tab-height: 100px;
+  --tab-padding: 30px;
+
+  --sidenav-width: 300px;
+
+  --border-color: var(--text-quartenary);
+
+  --conversations-panel: 400px;
+
+  font-family: Figtree, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -24,11 +55,22 @@ a:hover {
 }
 
 body {
+  padding: 0;
   margin: 0;
   display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+}
+
+#app {
+  height: 100%;
+  width: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+  margin: 0;
+  color: var(--text-primary)
 }
 
 h1 {
@@ -57,13 +99,6 @@ button:focus-visible {
 
 .card {
   padding: 2em;
-}
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
 }
 
 @media (prefers-color-scheme: light) {

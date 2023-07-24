@@ -13,6 +13,8 @@ export default {
   components: {
     EiConversations: defineAsyncComponent(() => import("@/components/Conversations/Conversations.vue")),
     EiConversationsPanel: defineAsyncComponent(() => import("@/components/Conversations/ConversationsPanel.vue"))
+  },
+  created() {
   }
 }
 </script>

@@ -4,23 +4,17 @@
   </component>
 </template>
 
-<script lang="ts">
-import { defineComponent, defineAsyncComponent } from "vue";
-import { LayoutType } from "@/types/layouts";
+<script setup>
+import AppLayout from "@/layouts/AppLayout.vue";
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
 
-export default defineComponent({
-  name: "App",
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 
-  components: {
-    DefaultLayout: defineAsyncComponent(() => import("@/layouts/DefaultLayout.vue")),
-    AppLayout: defineAsyncComponent(() => import("@/layouts/AppLayout.vue")),
-  },
+const meta = computed(() => useRoute().meta);
 
-  computed: {
-    layout(): LayoutType {
-      const layout = this.$route.meta.layout
-      return layout && layout === 'app' ? 'AppLayout' : 'DefaultLayout'
-    }
-  }
+const layout = computed(() => {
+	const { layout } = meta && meta.value;
+	return layout && layout === 'app' ? AppLayout : DefaultLayout;
 })
 </script>

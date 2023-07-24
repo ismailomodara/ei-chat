@@ -6,9 +6,13 @@ import App from './App.vue'
 import "@/assets/scss/ei-main.scss";
 
 // Router
-import router from './router';
+import router from "@/router";
+
+// Store
+import store from "@/store";
 
 const app = createApp(App)
 
 app.use(router)
+app.use(store)
 app.mount('#app')

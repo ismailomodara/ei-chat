@@ -6,14 +6,18 @@
       </div>
       <ul class="ei-app-layout--sidenav__menu">
         <li
-          v-for="item in menu"
-          :key="item.name"
-          :class="{ active: activeMenu === item.name }"
-          @click="route(item.route)">
-          <span class="icon"><i :class="`ei-icon--${item.icon}`" /></span>
-          <span class="label">{{ item.label }}</span>
+          v-for="route in routes"
+          :key="route.name"
+          :class="{
+						active: currentRoute === route.name,
+						disabled: !route.active
+					}"
+          @click="$router.push({ name: route.path })">
+          <span class="icon"><i :class="`ei-icon--${route.icon}`" /></span>
+          <span class="label">{{ route.label }}</span>
         </li>
       </ul>
+			<p @click="logout">Logout</p>
     </aside>
     <div class="ei-app-layout--body">
       <slot />
@@ -21,46 +25,40 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
+import { computed } from 'vue';
+import { useRoute } from "vue-router";
+import { useStore } from "@/store";
 
-export default defineComponent({
-  name: "AppLayout",
-  data() {
-    return {
-      menu: [
-        {
-          name: 'dashboard',
-          label: 'Dashboard',
-          route: 'dashboard',
-          icon: 'grid'
-        },
-        {
-          name: 'conversations',
-          label: 'Conversations',
-          route: 'conversations',
-          icon: 'message-square'
-        },
-        {
-          name: 'settings',
-          label: 'Settings',
-          route: 'settings',
-          icon: 'settings'
-        }
-      ]
-    }
-  },
-  computed: {
-    activeMenu() {
-      return this.$route.name
-    }
-  },
-  methods: {
-    route(route) {
-      this.$router.push({ name: route })
-    }
-  }
-})
+const store = useStore();
+
+const routes = [
+	{
+		name: 'dashboard',
+		label: 'Dashboard',
+		path: 'dashboard',
+		icon: 'grid',
+		active: false
+	},
+	{
+		name: 'conversations',
+		label: 'Conversations',
+		path: 'conversations',
+		icon: 'message-square',
+		active: true
+	},
+	{
+		name: 'settings',
+		label: 'Settings',
+		path: 'settings',
+		icon: 'settings',
+		active: false
+	}
+]
+
+const currentRoute = computed(() => useRoute().name);
+
+store.setUser();
 </script>
 
 <style lang="scss" scoped>
@@ -136,6 +134,11 @@ export default defineComponent({
             transition: color 0.2s ease-in;
           }
         }
+
+				&.disabled {
+					cursor: not-allowed;
+					//pointer-events: none;
+				}
       }
     }
   }
